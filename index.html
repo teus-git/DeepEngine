@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuralChat Local - Rectified Flow & NLP</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Importando TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script>
+    <!-- FileSaver para download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- Adicione antes de fechar </head> -->
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Barra Lateral -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>NeuralChat</h2>
+                <button id="btn-new-chat">+ Novo Chat</button>
+            </div>
+            <div id="history-list" class="history-list">
+                <!-- Lista de chats será injetada aqui -->
+            </div>
+            <div class="sidebar-footer">
+                <button id="btn-settings">⚙️ Configurações</button>
+                <div id="storage-indicator">Storage: 0%</div>
+            </div>
+        </aside>
+
+        <!-- Área Principal -->
+        <main class="chat-area">
+            <header class="chat-header">
+                <h3 id="current-chat-title">Novo Chat</h3>
+                <div class="model-status" id="model-status">Modelo: Pronto</div>
+            </header>
+
+            <div id="messages-container" class="messages-container">
+                <div class="message system">
+                    Bem-vindo. O modelo neural roda localmente no seu navegador.
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="toolbar">
+                    <select id="mode-selector">
+                        <option value="text">💬 Texto (RNN/LSTM)</option>
+                        <option value="image">🎨 Imagem (Rectified Flow)</option>
+                        <option value="search">🌍 Web Search (Wiki)</option>
+                    </select>
+                    <select id="aspect-ratio" style="display:none;">
+                        <option value="1:1">1:1 (Quadrado)</option>
+                        <option value="16:9">16:9 (Paisagem)</option>
+                        <option value="9:16">9:16 (Retrato)</option>
+                    </select>
+                </div>
+                <div class="input-wrapper">
+                    <textarea id="user-input" placeholder="Digite sua mensagem ou prompt..."></textarea>
+                    <button id="btn-send">Enviar</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Configurações -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Configurações Neurais</h3>
+            <label>Temperatura (Criatividade): <span id="temp-val">0.7</span></label>
+            <input type="range" id="temp-slider" min="0.1" max="2.0" step="0.1" value="0.7">
+            
+            <label>Passos de Inferência (Imagem): <span id="steps-val">20</span></label>
+            <input type="range" id="steps-slider" min="5" max="50" value="20">
+            
+            <button id="btn-close-settings">Fechar</button>
+        </div>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="search.js"></script>
+    <script src="brain_modules.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
